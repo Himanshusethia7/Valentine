@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid #ff6b8b;
+        }
+        
+        h1 {
+            color: #ff4d6d;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        .heart-container {
+            font-size: 4rem;
+            color: #ff4d6d;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .question {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 120px;
+        }
+        
+        .valentine-btn {
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        #yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            z-index: 10;
+        }
+        
+        #yes-btn:hover {
+            background-color: #ff3355;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+        }
+        
+        #no-btn {
+            background-color: #6c757d;
+            color: white;
+            position: relative;
+        }
+        
+        .message {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+        
+        .message h2 {
+            color: #ff4d6d;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .message p {
+            font-size: 1.8rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.7);
+            font-size: 24px;
+            animation: fall linear forwards;
+        }
+        
+        .counter {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes runaway {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw - 100px)); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .question { font-size: 1.8rem; }
+            .valentine-btn { font-size: 1.5rem; padding: 15px 30px; }
+            .message h2 { font-size: 2.2rem; }
+            .message p { font-size: 1.5rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .question { font-size: 1.5rem; }
+            .valentine-btn { font-size: 1.2rem; padding: 12px 25px; }
+            .buttons-container { gap: 15px; }
+            .message h2 { font-size: 1.8rem; }
+            .message p { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Valentine's Day!</h1>
+        
+        <div class="heart-container">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+        </div>
+        
+        <div class="question">Will you be my Valentine?</div>
+        
+        <div class="buttons-container">
+            <button id="yes-btn" class="valentine-btn">
+                <i class="fas fa-heart"></i> YES! <i class="fas fa-heart"></i>
+            </button>
+            <button id="no-btn" class="valentine-btn">No</button>
+        </div>
+        
+        <div class="counter" id="counter">No button clicked: 0 times</div>
+        
+        <div class="message" id="message">
+            <h2>Yay! You made me the happiest person! <i class="fas fa-heart"></i></h2>
+            <p>Thank you for saying YES! You've just made this Valentine's Day the most special one ever.</p>
+            <p>I promise to make every day feel like Valentine's Day with you!</p>
+            <p>Looking forward to creating beautiful memories together. <i class="fas fa-heart"></i></p>
+            <div class="heart-container" style="font-size: 3rem; margin-top: 20px;">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        
+        <div class="hearts" id="hearts"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+            const message = document.getElementById('message');
+            const counter = document.getElementById('counter');
+            const heartsContainer = document.getElementById('hearts');
+            
+            let noClickCount = 0;
+            let runAwaySpeed = 50;
+            let isRunningAway = false;
+            
+            // Function to create falling hearts
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                
+                // Random position
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                
+                // Random animation duration
+                const duration = Math.random() * 3 + 2;
+                heart.style.animation = `fall ${duration}s linear forwards`;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                }, duration * 1000);
+            }
+            
+            // Create falling hearts periodically
+            setInterval(createHeart, 300);
+            
+            // Function to move the "No" button away from cursor
+            function moveButtonAway(e) {
+                if (isRunningAway) return;
+                
+                const buttonRect = noBtn.getBoundingClientRect();
+                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+                
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // Calculate distance between cursor and button center
+                const distanceX = mouseX - buttonCenterX;
+                const distanceY = mouseY - buttonCenterY;
+                const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+                
+                // If cursor is too close to the button, move it away
+                if (distance < 100) {
+                    isRunningAway = true;
+                    
+                    // Calculate new position (opposite direction)
+                    const moveX = (distanceX / distance) * runAwaySpeed;
+                    const moveY = (distanceY / distance) * runAwaySpeed;
+                    
+                    // Get current position
+                    const currentX = parseInt(window.getComputedStyle(noBtn).left) || 0;
+                    const currentY = parseInt(window.getComputedStyle(noBtn).top) || 0;
+                    
+                    // Calculate new position
+                    let newX = currentX - moveX;
+                    let newY = currentY - moveY;
+                    
+                    // Keep button within container bounds
+                    const containerRect = document.querySelector('.buttons-container').getBoundingClientRect();
+                    const buttonWidth = noBtn.offsetWidth;
+                    const buttonHeight = noBtn.offsetHeight;
+                    
+                    // Constrain to container
+                    newX = Math.max(0, Math.min(newX, containerRect.width - buttonWidth));
+                    newY = Math.max(0, Math.min(newY, containerRect.height - buttonHeight));
+                    
+                    // Apply new position
+                    noBtn.style.position = 'absolute';
+                    noBtn.style.left = newX + 'px';
+                    noBtn.style.top = newY + 'px';
+                    
+                    // Reset flag after a short delay
+                    setTimeout(() => {
+                        isRunningAway = false;
+                    }, 200);
+                }
+            }
+            
+            // Function to handle "No" button click
+            function handleNoClick() {
+                noClickCount++;
+                counter.textContent = `No button clicked: ${noClickCount} time${noClickCount !== 1 ? 's' : ''}`;
+                
+                // Make the button run away faster with each click
+                runAwaySpeed += 20;
+                
+                // Change button text randomly
+                const noTexts = [
+                    "Are you sure?",
+                    "Think again!",
+                    "Really?",
+                    "Please?",
+                    "Give it another thought",
+                    "I'm sad now",
+                    "Don't do this!",
+                    "Try the other button",
+                    "Pretty please?",
+                    "You're breaking my heart"
+                ];
+                
+                const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+                noBtn.textContent = randomText;
+                
+                // Create extra hearts for dramatic effect
+                for(let i = 0; i < 10; i++) {
+                    setTimeout(() => createHeart(), i * 100);
+                }
+                
+                // If clicked too many times, temporarily hide the button
+                if (noClickCount >= 5) {
+                    noBtn.style.display = 'none';
+                    setTimeout(() => {
+                        noBtn.style.display = 'block';
+                    }, 1000);
+                }
+            }
+            
+            // Function to handle "Yes" button click
+            function handleYesClick() {
+                // Show the message
+                message.style.display = 'block';
+                
+                // Hide the buttons and counter
+                yesBtn.style.display = 'none';
+                noBtn.style.display = 'none';
+                counter.style.display = 'none';
+                
+                // Create celebration hearts
+                for(let i = 0; i < 50; i++) {
+                    setTimeout(() => createHeart(), i * 50);
+                }
+                
+                // Change title and question
+                document.querySelector('h1').textContent = "She Said YES!";
+                document.querySelector('.question').textContent = "You've made my Valentine's Day perfect!";
+                
+                // Play a celebration sound (if allowed by browser)
+                playCelebrationSound();
+            }
+            
+            // Function to play celebration sound
+            function playCelebrationSound() {
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Play a happy melody
+                    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                    oscillator.frequency.setValueAtTime(1046.50, audioContext.currentTime + 0.3); // C6
+                    
+                    oscillator.start();
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                } catch (e) {
+                    console.log("Audio context not supported or user interaction required");
+                }
+            }
+            
+            // Add event listeners
+            document.addEventListener('mousemove', moveButtonAway);
+            noBtn.addEventListener('click', handleNoClick);
+            yesBtn.addEventListener('click', handleYesClick);
+            
+            // Touch events for mobile
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    const event = new MouseEvent('mousemove', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    moveButtonAway(event);
+                }
+            });
+            
+            // Prevent context menu on buttons
+            noBtn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
